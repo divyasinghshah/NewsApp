@@ -40,41 +40,73 @@ export class News extends Component {
         });
         
     }
-   handlePreviousClick= async()=>{
-     console.log("Previous");
+    
+   updateNews=  async ()=>{
 
-     let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=9c81dad13a8646e4bd4c34757b61e70b&page=${this.state.page-1}&pageSize=${this.props.pageSize}`;
-     this.setState({loading:true}); 
-     let data= await fetch(url);
+    if(this.state.page<= Math.ceil(this.state.totalResults/this.props.pageSize))
+    {
+      const url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=business&category=${this.props.category}&apiKey=9c81dad13a8646e4bd4c34757b61e70b&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+      this.setState({loading:true});
+      let data= await fetch(url);
       let parsedData= await data.json();
       console.log(parsedData);
       
       
       this.setState({
         articles: parsedData.articles,
-        page: this.state.page-1,
+        
         loading:false
       });
+    }
+
+  }
+   handlePreviousClick= async()=>{
+     console.log("Previous");
+
+    //  let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=9c81dad13a8646e4bd4c34757b61e70b&page=${this.state.page-1}&pageSize=${this.props.pageSize}`;
+    //  this.setState({loading:true}); 
+    //  let data= await fetch(url);
+    //   let parsedData= await data.json();
+    //   console.log(parsedData);
+      
+      
+    //   this.setState({
+    //     articles: parsedData.articles,
+    //     page: this.state.page-1,
+    //     loading:false
+    //   });
+
+      this.setState({
+        page:this.state.page+1
+      });
+      this.updateNews();
 
 
     }
+
+
     handleNextClick= async ()=>{
       console.log("Next");
-      if(this.state.page+1<= Math.ceil(this.state.totalResults/this.props.pageSize))
-      {
-        let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=business&category=${this.props.category}&apiKey=9c81dad13a8646e4bd4c34757b61e70b&page=${this.state.page+1}&pageSize=${this.props.pageSize}`;
-        this.setState({loading:true});
-        let data= await fetch(url);
-        let parsedData= await data.json();
-        console.log(parsedData);
+      // if(this.state.page+1<= Math.ceil(this.state.totalResults/this.props.pageSize))
+      // {
+      //   let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=business&category=${this.props.category}&apiKey=9c81dad13a8646e4bd4c34757b61e70b&page=${this.state.page+1}&pageSize=${this.props.pageSize}`;
+      //   this.setState({loading:true});
+      //   let data= await fetch(url);
+      //   let parsedData= await data.json();
+      //   console.log(parsedData);
         
         
-        this.setState({
-          articles: parsedData.articles,
-          page: this.state.page+1,
-          loading:false
-        });
-      }
+      //   this.setState({
+      //     articles: parsedData.articles,
+      //     page: this.state.page+1,
+      //     loading:false
+      //   });
+      // }
+
+      this.setState({
+        page:this.state.page+1
+      });
+      this.updateNews();
       
      
 
@@ -83,7 +115,7 @@ export class News extends Component {
   render() {
     return (
       <div className='container my-3'>
-          <h2>New Monkey - Top Headlines</h2>
+          <h2 className='text-center my-5'>New Monkey - Top Headlines</h2>
           {this.state.loading && <Spinner/>}
           
 
