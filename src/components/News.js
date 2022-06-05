@@ -8,13 +8,16 @@ export class News extends Component {
   static defaultProptypes={
     country:'in',
     pageSize:8,
-    category:'general'
+    category:'general',
+    apiKey:'9c81dad13a8646e4bd4c34757b61e70b'
+    
   }
 
   static propTypes={
     country: PropTypes.string,
     pageSize: PropTypes.number,
-    category: PropTypes.string
+    category: PropTypes.string,
+    apiKey: PropTypes.string
   }
     
     constructor(){
